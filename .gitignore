@@ -1,0 +1,5 @@
+# Files and folders listed here should not be uploaded to GitHub.
+
+node_modules/
+credentialsDontPost/
+.env
