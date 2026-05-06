@@ -17,6 +17,22 @@
   <title>Search</title>
 </head>
 <body>
-  
+
+  <h1>Search for a Book</h1>
+
+  <form action="/search/results" method="GET">
+    <label for="bookSearch">Search for a book:</label>
+
+    <input
+      type="text"
+      id="bookSearch"
+      name="q"
+      placeholder="Enter title, author, or ISBN"
+      required
+    />
+
+    <button type="submit">Search</button>
+  </form>
+
 </body>
 </html>

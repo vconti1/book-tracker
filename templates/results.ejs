@@ -16,10 +16,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results</title>
+  <title>Search Results</title>
 </head>
 <body>
-  
+  <h1>Search Results</h1>
+
+  <p>You searched for: <%= query %></p>
+  <a href="/">Home</a>
+  <a href="/search">Search again</a>
+
+
+  <% if (books.length === 0) { %>
+    <p>No books found.</p>
+  <% } else { %>
+    <% books.forEach(book => { %>
+      <div>
+        <h2><%= book.title %></h2>
+        <% if (book.coverId) { %>
+        <img
+          src="https://covers.openlibrary.org/b/id/<%= book.coverId %>-M.jpg"
+          alt="Cover for <%= book.title %>"
+        >
+      <% } else { %>
+        <p><em>No cover available</em></p>
+      <% } %>
+        <p>Author: <%= book.author %></p>
+        <p>First published: <%= book.firstPublishYear %></p>
+        <p>ISBN: <%= book.isbn %></p>
+
+        <form action="/library/add" method="POST">
+          <input type="hidden" name="title" value="<%= book.title %>">
+          <input type="hidden" name="author" value="<%= book.author %>">
+          <input type="hidden" name="firstPublishYear" value="<%= book.firstPublishYear %>">
+          <input type="hidden" name="isbn" value="<%= book.isbn %>">
+          <input type="hidden" name="coverId" value="<%= book.coverId %>">
+          <input type="hidden" name="openLibraryKey" value="<%= book.openLibraryKey %>">
+
+          <button type="submit">Add to Library</button>
+        </form>
+      </div>
+
+      <hr>
+    <% }) %>
+  <% } %>
+
+  <a href="/search">Search again</a>
 </body>
 </html>
