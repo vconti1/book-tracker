@@ -2,7 +2,7 @@
 
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");;
 
 require("dotenv").config({
   path: path.resolve(__dirname, "credentialsDontPost/.env"),
@@ -15,6 +15,8 @@ const libraryRoutes = require("./routes/libraryRoutes");
 const statsRoutes = require("./routes/statsRoutes");
 
 const app = express();
+
+app.use(express.static('public'));
 
 if (process.argv.length !== 3) {
   console.log("Usage: node server.js port_number");
