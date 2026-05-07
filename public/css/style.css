@@ -5,6 +5,8 @@
     font-style: normal;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    transition: 0.3s;
 }
 
 .navbar{
@@ -14,7 +16,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(18, 160, 225);
 }
 i{
     margin-right: 10px;
@@ -36,8 +38,44 @@ nav a{
     transition: 0.3s ease-in-out;
 }
 nav a:hover{
-    background-color: red;
+    background-color: black;
 }
 .active{
-    background-color: red;
+    background-color: black;
+}
+
+.container{
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+form{
+    width: 75vw;
+    border: 1px solid gray;
+    border-radius: 25px;
+    padding: 20px;
+    text-align: center;
+}
+.search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+form input{
+    width: 50vw;
+    height: 7vh;
+}
+.sub_btn{
+    border: 1px solid black;
+    color: rgb(2, 2, 2);
+    font-size: 30px;
+    border-radius: 0px 50% 50% 0px;
+    width: 47px;
+    height: 47px;
+}
+.sub_btn:hover{
+background-color: rgb(18, 160, 225);
+color: white;
 }

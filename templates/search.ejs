@@ -20,21 +20,7 @@
 </head>
 <body>
 
-  <h1>Search for a Book</h1>
-
-  <form action="/search/results" method="GET">
-    <label for="bookSearch">Search for a book:</label>
-
-    <input
-      type="text"
-      id="bookSearch"
-      name="q"
-      placeholder="Enter title, author, or ISBN"
-      required
-    />
-
-    <button type="submit">Search</button>
-  </form>
+  
 
    <div class="navbar">
   <h1 ><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
@@ -45,7 +31,24 @@
     <a href="/library"> <i class="fa-solid fa-book-open"></i>My Library</a>
     <a href="/stats" ><i class="fa-solid fa-chart-column"></i>Stats</a>
   </nav>
-
   </div>
+
+  
+<div class="container">
+  <form action="/search/results" method="GET">
+    <h1>Search for a Book</h1>
+    <div class="search">
+    <input
+      type="text"
+      id="bookSearch"
+      name="q"
+      placeholder="Enter title, author, or ISBN"
+      required
+    />
+    <button type="submit" class="sub_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+  </form>
+
+</div>
 </body>
 </html>
