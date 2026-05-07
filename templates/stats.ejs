@@ -1,4 +1,4 @@
-<!--
+<!-- 
   Stats page template.
 
   This page should display reading statistics calculated from MongoDB data.
@@ -9,7 +9,7 @@
   - Number of Reading books
   - Number of Finished books
   - Average rating
--->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,5 +32,151 @@
   </nav>
 
   </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reading Stats</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f0e11;
+      color: #f0ece4;
+      min-height: 100vh;
+      padding: 3rem 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: #7a7580;
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      max-width: 800px;
+    }
+
+    .card {
+      background: #1a1820;
+      border: 1px solid #2a2730;
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover { transform: translateY(-3px); border-color: #4a4560; }
+
+    .card .accent {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+    }
+    .card.total   .accent { background: #e8c87a; }
+    .card.toread  .accent { background: #7ab8e8; }
+    .card.reading .accent { background: #a8e87a; }
+    .card.finished .accent { background: #e87ab8; }
+    .card.rating  .accent { background: #c87ae8; }
+
+    .card .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #7a7580;
+      margin-bottom: 0.75rem;
+    }
+
+    .card .value {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .card.total   .value { color: #e8c87a; }
+    .card.toread  .value { color: #7ab8e8; }
+    .card.reading .value { color: #a8e87a; }
+    .card.finished .value { color: #e87ab8; }
+    .card.rating  .value { color: #c87ae8; }
+
+    .card .sub {
+      font-size: 0.8rem;
+      color: #7a7580;
+    }
+
+    a.back {
+      display: inline-block;
+      margin-top: 3rem;
+      color: #7a7580;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #2a2730;
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    a.back:hover { color: #f0ece4; }
+  </style>
+</head>
+<body>
+  <h1>Reading Stats</h1>
+  <p class="subtitle">Your library at a glance</p>
+
+  <div class="grid">
+    <div class="card total">
+      <div class="accent"></div>
+      <div class="label">Total Books</div>
+      <div class="value"><%= stats.total %></div>
+      <div class="sub">in your library</div>
+    </div>
+
+    <div class="card toread">
+      <div class="accent"></div>
+      <div class="label">To Read</div>
+      <div class="value"><%= stats.toRead %></div>
+      <div class="sub">on the backlog</div>
+    </div>
+
+    <div class="card reading">
+      <div class="accent"></div>
+      <div class="label">Reading</div>
+      <div class="value"><%= stats.reading %></div>
+      <div class="sub">in progress</div>
+    </div>
+
+    <div class="card finished">
+      <div class="accent"></div>
+      <div class="label">Finished</div>
+      <div class="value"><%= stats.finished %></div>
+      <div class="sub">completed</div>
+    </div>
+
+    <% if (stats.avgRating) { %>
+    <div class="card rating">
+      <div class="accent"></div>
+      <div class="label">Avg Rating</div>
+      <div class="value"><%= stats.avgRating %></div>
+      <div class="sub">across <%= stats.ratedCount %> rated books</div>
+    </div>
+    <% } %>
+  </div>
+
+  <a class="back" href="/library">← Back to library</a>
 </body>
 </html>
