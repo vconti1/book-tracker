@@ -1,18 +1,3 @@
-<!--
-  Library page template.
-
-  This page should display all books saved in MongoDB.
-
-  Each saved book should show:
-  - Title
-  - Author
-  - Cover image, if available
-  - Reading status
-  - Rating, if used
-
-  Users should be able to click a book to view details or edit it.
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,16 +8,55 @@
   <script src="https://kit.fontawesome.com/73117c85c2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-   <div class="navbar">
-  <h1 ><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
-
-  <nav>
-    <a href="/"> <i class="fa-solid fa-house"></i>Home</a>
-    <a href="/search"> <i class="fa-solid fa-magnifying-glass"></i>Search Books</a>
-    <a href="/library" class="active"> <i class="fa-solid fa-book-open"></i>My Library</a>
-    <a href="/stats" ><i class="fa-solid fa-chart-column"></i>Stats</a>
-  </nav>
-
+  <div class="navbar">
+    <h1><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
+    <nav>
+      <a href="/"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/search"><i class="fa-solid fa-magnifying-glass"></i>Search Books</a>
+      <a href="/library" class="active"><i class="fa-solid fa-book-open"></i>My Library</a>
+      <a href="/stats"><i class="fa-solid fa-chart-column"></i>Stats</a>
+    </nav>
   </div>
+
+  <main>
+    <h2>My Library</h2>
+    <div id="book-list"></div>
+  </main>
+
+  <script>
+    fetch("/library/books")
+      .then(function(res) { return res.json(); })
+      .then(function(books) {
+        var container = document.getElementById("book-list");
+
+        if (books.length === 0) {
+          container.innerHTML = "<p>No books saved yet. <a href='/search'>Search for books</a> to add some.</p>";
+          return;
+        }
+        var html = "<ul>";
+
+        for (var i = 0; i < books.length; i++) {
+          var book = books[i];
+
+          var cover = "";
+          if (book.coverId) {
+            cover = `<img src="https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg" alt="cover">`;
+          }
+
+          var rating = "";
+          if (book.rating) {
+            rating = `<div>Rating: ${book.rating}/5</div>`;
+          }
+
+          html += `<li><a href="/library/${book._id}">${cover}<strong>${book.title}</strong></a><div>${book.author}</div><div>${book.status}</div>${rating}</li>`;
+        }
+
+        html += "</ul>";
+        container.innerHTML = html;
+      })
+      .catch(function(error) {
+        document.getElementById("book-list").innerHTML = "<p>Error loading books: " + error.message + "</p>";
+      });
+  </script>
 </body>
 </html>

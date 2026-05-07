@@ -1,30 +1,76 @@
-<!--
-  Book details page template.
-
-  This page should display full information for one saved book.
-
-  It can show:
-  - Title
-  - Author
-  - First publish year
-  - Cover image
-  - Current reading status
-  - Notes
-  - Rating
-  - Date added
-  - Date finished, if available
-
-  It should also link to the edit page for this book.
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Details</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://kit.fontawesome.com/73117c85c2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  
+  <div class="navbar">
+    <h1><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
+    <nav>
+      <a href="/"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/search"><i class="fa-solid fa-magnifying-glass"></i>Search Books</a>
+      <a href="/library" class="active"><i class="fa-solid fa-book-open"></i>My Library</a>
+      <a href="/stats"><i class="fa-solid fa-chart-column"></i>Stats</a>
+    </nav>
+  </div>
+
+  <main>
+    <div id="book-details"></div>
+  </main>
+
+  <script>
+    var id = window.location.pathname.split("/")[2];
+
+    fetch(`/library/${id}/data`)
+      .then(function(res) { return res.json(); })
+      .then(function(book) {
+        var container = document.getElementById("book-details");
+
+        var cover = "";
+        if (book.coverId) {
+          cover = `<img src="https://covers.openlibrary.org/b/id/${book.coverId}-L.jpg" alt="cover">`;
+        }
+
+        var year = "";
+        if (book.firstPublishYear) {
+          year = `<p>First published: ${book.firstPublishYear}</p>`;
+        }
+
+        var rating = "";
+        if (book.rating) {
+          rating = `<p>Rating: ${book.rating}/5</p>`;
+        }
+
+        var notes = "";
+        if (book.notes) {
+          notes = `<p>Notes: ${book.notes}</p>`;
+        }
+
+        var dateFinished = "";
+        if (book.dateFinished) {
+          dateFinished = `<p>Date finished: ${new Date(book.dateFinished).toDateString()}</p>`;
+        }
+
+        container.innerHTML = 
+          `<h2>${book.title}</h2>
+          ${cover}
+          <p>Author: ${book.author}</p>
+          ${year}
+          <p>Status: ${book.status}</p>
+          ${rating}
+          ${notes}
+          <p>Date added: ${new Date(book.dateAdded).toDateString()}</p>
+          ${dateFinished}
+          <a href="/library/${book._id}/edit">Edit</a>
+          <form action="/library/${book._id}/delete" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+          <a href="/library">Back to Library</a>`;
+      });
+  </script>
 </body>
 </html>

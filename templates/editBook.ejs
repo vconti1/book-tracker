@@ -1,25 +1,79 @@
-<!--
-  Edit book page template.
-
-  This page should contain a form that lets users update a saved book.
-
-  Users may update:
-  - Reading status
-  - Notes
-  - Rating
-  - Date finished
-
-  The form should submit the updated data to the library update route.
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Book</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://kit.fontawesome.com/73117c85c2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  
+  <div class="navbar">
+    <h1><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
+    <nav>
+      <a href="/"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/search"><i class="fa-solid fa-magnifying-glass"></i>Search Books</a>
+      <a href="/library"><i class="fa-solid fa-book-open"></i>My Library</a>
+      <a href="/stats"><i class="fa-solid fa-chart-column"></i>Stats</a>
+    </nav>
+  </div>
+
+  <main>
+    <h2>Edit Book</h2>
+    <div id="edit-container"></div>
+  </main>
+
+  <script>
+    var id = window.location.pathname.split("/")[2];
+
+    fetch(`/library/${id}/data`)
+      .then(function(res) { return res.json(); })
+      .then(function(book) {
+        var container = document.getElementById("edit-container");
+
+        container.innerHTML = 
+          `<h3>${book.title}</h3>
+          <form action="/library/${book._id}/edit" method="POST">
+
+            <div>
+              <label>Status</label><br>
+              <select name="status">
+                <option value="To Read">To Read</option>
+                <option value="Reading">Reading</option>
+                <option value="Finished">Finished</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Rating (1-5)</label><br>
+              <input type="number" name="rating" min="1" max="5" value="${book.rating || ""}">
+            </div>
+
+            <div>
+              <label>Notes</label><br>
+              <textarea name="notes">${book.notes || ""}</textarea>
+            </div>
+
+            <div>
+              <label>Date Finished</label><br>
+              <input type="date" name="dateFinished" value="${book.dateFinished ? new Date(book.dateFinished).toISOString().split("T")[0] : ""}">
+            </div>
+
+            <div>
+              <button type="submit">Save</button>
+            </div>
+
+          </form>
+          <a href="/library/${book._id}">Cancel</a>
+        `;
+
+        var select = container.querySelector("select[name='status']");
+        for (var i = 0; i < select.options.length; i++) {
+          if (select.options[i].value === book.status) {
+            select.options[i].selected = true;
+          }
+        }
+      });
+  </script>
 </body>
 </html>
