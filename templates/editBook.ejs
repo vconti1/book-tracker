@@ -18,10 +18,14 @@
     </nav>
   </div>
 
-  <main>
+<main class="edit-page">
+  <section class="edit-header">
     <h2>Edit Book</h2>
-    <div id="edit-container"></div>
-  </main>
+    <p>Update your reading status, rating, and notes.</p>
+  </section>
+
+  <div id="edit-container"></div>
+</main>
 
   <script>
     var id = window.location.pathname.split("/")[2];
@@ -32,11 +36,13 @@
         var container = document.getElementById("edit-container");
 
         container.innerHTML = 
-          `<h3>${book.title}</h3>
-          <form action="/library/${book._id}/edit" method="POST">
+          `<section class="edit-card">
+          <h3>${book.title}</h3>
 
-            <div>
-              <label>Status</label><br>
+          <form action="/library/${book._id}/edit" method="POST" class="edit-form">
+
+            <div class="form-group">
+              <label>Status</label>
               <select name="status">
                 <option value="To Read">To Read</option>
                 <option value="Reading">Reading</option>
@@ -44,28 +50,33 @@
               </select>
             </div>
 
-            <div>
-              <label>Rating (1-5)</label><br>
+            <div class="form-group">
+              <label>Rating (1-5)</label>
               <input type="number" name="rating" min="1" max="5" value="${book.rating || ""}">
             </div>
 
-            <div>
-              <label>Notes</label><br>
+            <div class="form-group">
+              <label>Notes</label>
               <textarea name="notes">${book.notes || ""}</textarea>
             </div>
 
-            <div>
-              <label>Date Finished</label><br>
+            <div class="form-group">
+              <label>Date Finished</label>
               <input type="date" name="dateFinished" value="${book.dateFinished ? new Date(book.dateFinished).toISOString().split("T")[0] : ""}">
             </div>
 
-            <div>
-              <button type="submit">Save</button>
+            <div class="edit-actions">
+              <button type="submit" class="save-btn">
+                <i class="fa-solid fa-floppy-disk"></i>Save
+              </button>
+
+              <a class="cancel-btn" href="/library/${book._id}">
+                Cancel
+              </a>
             </div>
 
           </form>
-          <a href="/library/${book._id}">Cancel</a>
-        `;
+        </section>`;
 
         var select = container.querySelector("select[name='status']");
         for (var i = 0; i < select.options.length; i++) {

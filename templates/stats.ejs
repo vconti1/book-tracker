@@ -41,7 +41,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Reading Stats</title>
-  <style>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://kit.fontawesome.com/73117c85c2.js" crossorigin="anonymous"></script>
+  <!-- <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -132,51 +134,67 @@
       transition: color 0.2s;
     }
     a.back:hover { color: #f0ece4; }
-  </style>
+  </style> -->
+
 </head>
 <body>
-  <h1>Reading Stats</h1>
-  <p class="subtitle">Your library at a glance</p>
+  <div class="navbar">
+    <h1><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
 
-  <div class="grid">
-    <div class="card total">
-      <div class="accent"></div>
-      <div class="label">Total Books</div>
-      <div class="value"><%= stats.total %></div>
-      <div class="sub">in your library</div>
-    </div>
-
-    <div class="card toread">
-      <div class="accent"></div>
-      <div class="label">To Read</div>
-      <div class="value"><%= stats.toRead %></div>
-      <div class="sub">on the backlog</div>
-    </div>
-
-    <div class="card reading">
-      <div class="accent"></div>
-      <div class="label">Reading</div>
-      <div class="value"><%= stats.reading %></div>
-      <div class="sub">in progress</div>
-    </div>
-
-    <div class="card finished">
-      <div class="accent"></div>
-      <div class="label">Finished</div>
-      <div class="value"><%= stats.finished %></div>
-      <div class="sub">completed</div>
-    </div>
-
-    <% if (stats.avgRating) { %>
-    <div class="card rating">
-      <div class="accent"></div>
-      <div class="label">Avg Rating</div>
-      <div class="value"><%= stats.avgRating %></div>
-      <div class="sub">across <%= stats.ratedCount %> rated books</div>
-    </div>
-    <% } %>
+    <nav>
+      <a href="/"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/search"><i class="fa-solid fa-magnifying-glass"></i>Search Books</a>
+      <a href="/library"><i class="fa-solid fa-book-open"></i>My Library</a>
+      <a href="/stats" class="active"><i class="fa-solid fa-chart-column"></i>Stats</a>
+    </nav>
   </div>
 
-  <a class="back" href="/library">← Back to library</a>
+  <main class="stats-page">
+    <section class="stats-header">
+      <h1>Reading Stats</h1>
+      <p class="subtitle">Your library at a glance</p>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
+        <div class="label">Total Books</div>
+        <div class="value"><%= stats.total %></div>
+        <div class="sub">in your library</div>
+      </div>
+
+      <div class="stat-card toread">
+        <div class="stat-icon"><i class="fa-solid fa-bookmark"></i></div>
+        <div class="label">To Read</div>
+        <div class="value"><%= stats.toRead %></div>
+        <div class="sub">on the backlog</div>
+      </div>
+
+      <div class="stat-card reading">
+        <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+        <div class="label">Reading</div>
+        <div class="value"><%= stats.reading %></div>
+        <div class="sub">in progress</div>
+      </div>
+
+      <div class="stat-card finished">
+        <div class="stat-icon"><i class="fa-solid fa-check"></i></div>
+        <div class="label">Finished</div>
+        <div class="value"><%= stats.finished %></div>
+        <div class="sub">completed</div>
+      </div>
+
+      <% if (stats.avgRating) { %>
+        <div class="stat-card rating">
+          <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+          <div class="label">Avg Rating</div>
+          <div class="value"><%= stats.avgRating %></div>
+          <div class="sub">across <%= stats.ratedCount %> rated books</div>
+        </div>
+      <% } %>
+    </section>
+
+    <a class="back-btn" href="/library">Back to Library</a>
+  </main>
 </body>
 </html>

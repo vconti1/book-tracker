@@ -18,7 +18,7 @@
     </nav>
   </div>
 
-  <main>
+  <main class="details-page">
     <div id="book-details"></div>
   </main>
 
@@ -37,39 +37,58 @@
 
         var year = "";
         if (book.firstPublishYear) {
-          year = `<p>First published: ${book.firstPublishYear}</p>`;
+          year = `<p><strong>First published:</strong> ${book.firstPublishYear}</p>`;
         }
 
         var rating = "";
         if (book.rating) {
-          rating = `<p>Rating: ${book.rating}/5</p>`;
+          rating = `<p><strong>Rating:</strong> ${book.rating}/5</p>`;
         }
 
         var notes = "";
         if (book.notes) {
-          notes = `<p>Notes: ${book.notes}</p>`;
+          notes = `<p><strong>Notes:</strong> ${book.notes}</p>`;
         }
 
         var dateFinished = "";
         if (book.dateFinished) {
-          dateFinished = `<p>Date finished: ${new Date(book.dateFinished).toDateString()}</p>`;
+          dateFinished = `<p><strong>Date finished:</strong> ${new Date(book.dateFinished).toDateString()}</p>`;
         }
 
         container.innerHTML = 
-          `<h2>${book.title}</h2>
-          ${cover}
-          <p>Author: ${book.author}</p>
-          ${year}
-          <p>Status: ${book.status}</p>
-          ${rating}
-          ${notes}
-          <p>Date added: ${new Date(book.dateAdded).toDateString()}</p>
-          ${dateFinished}
-          <a href="/library/${book._id}/edit">Edit</a>
-          <form action="/library/${book._id}/delete" method="POST">
-            <button type="submit">Delete</button>
-          </form>
-          <a href="/library">Back to Library</a>`;
+          `<section class="details-card">
+            <div class="details-cover">
+              ${cover || "<p><em>No cover available</em></p>"}
+            </div>
+
+            <div class="details-info">
+              <h2>${book.title}</h2>
+
+              <p><strong>Author:</strong> ${book.author}</p>
+              ${year}
+              <p><strong>Status:</strong> ${book.status}</p>
+              ${rating}
+              ${notes}
+              <p><strong>Date added:</strong> ${new Date(book.dateAdded).toDateString()}</p>
+              ${dateFinished}
+
+              <div class="details-actions">
+                <a class="edit-btn" href="/library/${book._id}/edit">
+                  <i class="fa-solid fa-pen"></i>Edit
+                </a>
+
+                <form action="/library/${book._id}/delete" method="POST" class="delete-form">
+                  <button type="submit" class="delete-btn">
+                    <i class="fa-solid fa-trash"></i>Delete
+                  </button>
+                </form>
+
+                <a class="back-btn" href="/library">
+                  Back to Library
+                </a>
+              </div>
+            </div>
+          </section>`;
       });
   </script>
 </body>

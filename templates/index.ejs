@@ -27,7 +27,12 @@
   </nav>
 
   </div>
-  <main>
+<main class="home-page">
+  <section class="home-card">
+    <div class="home-icon">
+      <i class="fa-solid fa-book-open-reader"></i>
+    </div>
+
     <h2>Welcome</h2>
 
     <p>
@@ -37,8 +42,23 @@
     </p>
 
     <p>
-      Use the navigation links above to search for books or view your saved library.
+      Use the buttons below to search for books, view your saved library, or check your reading stats.
     </p>
-  </main>
+
+    <div class="home-actions">
+      <a href="/search" class="btn">
+        <i class="fa-solid fa-magnifying-glass"></i>Search Books
+      </a>
+
+      <a href="/library" class="btn">
+        <i class="fa-solid fa-book-open"></i>My Library
+      </a>
+
+      <a href="/stats" class="btn">
+        <i class="fa-solid fa-chart-column"></i>Stats
+      </a>
+    </div>
+  </section>
+</main>
 </body>
 </html>

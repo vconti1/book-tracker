@@ -18,48 +18,69 @@
   <meta charset="UTF-8">
   <title>Search Results</title>
 </head>
+<link rel="stylesheet" href="/css/style.css">
 <body>
-  <h1>Search Results</h1>
 
-  <p>You searched for: <%= query %></p>
-  <a href="/">Home</a>
-  <a href="/search">Search again</a>
+  <div class="navbar">
+    <h1><i class="fa-solid fa-book-open-reader"></i>Book Tracker</h1>
 
+    <nav>
+      <a href="/"> <i class="fa-solid fa-house"></i>Home</a>
+      <a href="/search" class="active"> <i class="fa-solid fa-magnifying-glass"></i>Search Books</a>
+      <a href="/library"> <i class="fa-solid fa-book-open"></i>My Library</a>
+      <a href="/stats"><i class="fa-solid fa-chart-column"></i>Stats</a>
+    </nav>
+  </div>
 
-  <% if (books.length === 0) { %>
-    <p>No books found.</p>
-  <% } else { %>
-    <% books.forEach(book => { %>
-      <div>
-        <h2><%= book.title %></h2>
-        <% if (book.coverId) { %>
-        <img
-          src="https://covers.openlibrary.org/b/id/<%= book.coverId %>-M.jpg"
-          alt="Cover for <%= book.title %>"
-        >
-      <% } else { %>
-        <p><em>No cover available</em></p>
-      <% } %>
-        <p>Author: <%= book.author %></p>
-        <p>First published: <%= book.firstPublishYear %></p>
-        <p>ISBN: <%= book.isbn %></p>
+  <main class="results-page">
+    <section class="results-header">
+      <h1>Search Results</h1>
+      <p>You searched for: <span><%= query %></span></p>
+      <a href="/search" class="secondary-link">Search Again</a>
+    </section>
 
-        <form action="/library/add" method="POST">
-          <input type="hidden" name="title" value="<%= book.title %>">
-          <input type="hidden" name="author" value="<%= book.author %>">
-          <input type="hidden" name="firstPublishYear" value="<%= book.firstPublishYear %>">
-          <input type="hidden" name="isbn" value="<%= book.isbn %>">
-          <input type="hidden" name="coverId" value="<%= book.coverId %>">
-          <input type="hidden" name="openLibraryKey" value="<%= book.openLibraryKey %>">
-
-          <button type="submit">Add to Library</button>
-        </form>
+    <% if (books.length === 0) { %>
+      <div class="no-results">
+        <p>No books found.</p>
       </div>
+    <% } else { %>
+      <section class="results-grid">
+        <% books.forEach(book => { %>
+          <div class="book-card">
+            <div class="cover-area">
+              <% if (book.coverId) { %>
+                <img
+                  src="https://covers.openlibrary.org/b/id/<%= book.coverId %>-M.jpg"
+                  alt="Cover for <%= book.title %>"
+                >
+              <% } else { %>
+                <p><em>No cover available</em></p>
+              <% } %>
+            </div>
 
-      <hr>
-    <% }) %>
-  <% } %>
+            <div class="book-info">
+              <h2><%= book.title %></h2>
+              <p><strong>Author:</strong> <%= book.author %></p>
+              <p><strong>First published:</strong> <%= book.firstPublishYear %></p>
+              <p><strong>ISBN:</strong> <%= book.isbn %></p>
 
-  <a href="/search">Search again</a>
+              <form action="/library/add" method="POST" class="add-form">
+                <input type="hidden" name="title" value="<%= book.title %>">
+                <input type="hidden" name="author" value="<%= book.author %>">
+                <input type="hidden" name="firstPublishYear" value="<%= book.firstPublishYear %>">
+                <input type="hidden" name="isbn" value="<%= book.isbn %>">
+                <input type="hidden" name="coverId" value="<%= book.coverId %>">
+                <input type="hidden" name="openLibraryKey" value="<%= book.openLibraryKey %>">
+
+                <button type="submit" class="add-btn">
+                  <i class="fa-solid fa-plus"></i>Add to Library
+                </button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </section>
+    <% } %>
+  </main>
 </body>
 </html>

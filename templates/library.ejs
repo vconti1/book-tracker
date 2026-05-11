@@ -18,9 +18,13 @@
     </nav>
   </div>
 
-  <main>
+<main class="library-page">
+  <section class="library-header">
     <h2>My Library</h2>
-    <div id="book-list"></div>
+    <p>Your saved books will appear here.</p>
+  </section>
+
+  <div id="book-list"></div>
   </main>
 
   <script>
@@ -30,7 +34,7 @@
         var container = document.getElementById("book-list");
 
         if (books.length === 0) {
-          container.innerHTML = "<p>No books saved yet. <a href='/search'>Search for books</a> to add some.</p>";
+          ccontainer.innerHTML = "<div class='empty-library'><p>No books saved yet.</p><a href='/search'>Search for books</a></div>";
           return;
         }
         var html = "<ul>";
