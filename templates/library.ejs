@@ -34,7 +34,7 @@
         var container = document.getElementById("book-list");
 
         if (books.length === 0) {
-          ccontainer.innerHTML = "<div class='empty-library'><p>No books saved yet.</p><a href='/search'>Search for books</a></div>";
+          container.innerHTML = "<div class='empty-library'><p>No books saved yet.</p><a href='/search'>Search for books</a></div>";
           return;
         }
         var html = "<ul>";
