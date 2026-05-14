@@ -18,12 +18,14 @@ const app = express();
 
 app.use(express.static('public'));
 
-if (process.argv.length !== 3) {
-  console.log("Usage: node server.js port_number");
-  process.exit(1);
-}
+// if (process.argv.length !== 3) {
+//   console.log("Usage: node server.js port_number");
+//   process.exit(1);
+// }
 
-const portNumber = process.argv[2];
+// const portNumber = process.argv[2];
+
+const PORT = process.env.PORT || 3000;
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
@@ -40,7 +42,7 @@ app.use("/library", libraryRoutes);
 app.use("/stats", statsRoutes);
 
 connectToDatabase().then(() => {
-  app.listen(portNumber, () => {
-    console.log(`Server running at http://localhost:${portNumber}`);
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
   });
 });
